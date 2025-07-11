@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Frutinha - Pix</title>
+    <style>
+        body {
+            background-color: #FF005C;
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 440px;
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            border: 8px solid #1f2024;
+            box-shadow: -15px 15px 0 0 #1f2024;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-family: 'right grotesk', sans-serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            color: #1f2024;
+            letter-spacing: 2px;
+        }
+
+        .pix-section {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #1f2024;
+        }
+
+        .pix-code {
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            margin: 15px 0;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .copy-btn {
+            background-color: #fe1f4f;
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+            border-radius: 10px;
+            font-family: 'right grotesk', sans-serif;
+            font-weight: bold;
+            box-shadow: -5px 3px 0 3px #1f2024;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn:hover {
+            transform: translate(3px, -3px);
+            box-shadow: -8px 6px 0 3px #1f2024;
+            background-color: #9f1331;
+        }
+
+        .instructions {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .instructions h3 {
+            color: #1f2024;
+            margin-bottom: 10px;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .back-btn {
+            background-color: #4F7280;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 10px 5px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: -3px 2px 0 2px #1f2024;
+        }
+
+        .back-btn:hover {
+            transform: translate(2px, -2px);
+            box-shadow: -5px 4px 0 2px #1f2024;
+            background-color: #3a5a68;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .pix-code {
+                font-size: 10px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍎 Parabéns! 🍎</h1>
+        <p><strong>Você ganhou R$ 10,00!</strong></p>
+        
+        <div class="pix-section">
+            <h3>💰 Receba seu prêmio via PIX</h3>
+            <p>Copie o código abaixo e cole no seu aplicativo do banco:</p>
+            
+            <div class="pix-code" id="pixCode">00020101021126420014br.gov.bcb.pix0120freevids70@gmail.com520400005303986540510.005802BR5925ROMULO CRISTIANO CONCENZO6009SAO PAULO622905251JZRY8RJZQH1AFQDTBHE4BNKC63045B6E</div>
+            
+            <button class="copy-btn" onclick="copyPixCode()">📋 Copiar Código PIX</button>
+            
+            <div class="success-message" id="successMessage">
+                ✅ Código PIX copiado com sucesso!
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>📱 Como receber:</h3>
+            <ol>
+                <li>Abra o aplicativo do seu banco</li>
+                <li>Vá em PIX → Receber</li>
+                <li>Cole o código copiado</li>
+                <li>Confirme o recebimento de R$ 10,00</li>
+                <li>Pronto! O dinheiro estará na sua conta</li>
+            </ol>
+        </div>
+
+        <button class="back-btn" onclick="window.history.back()">← Voltar</button>
+    </div>
+
+    <script>
+        function copyPixCode() {
+            const pixCode = document.getElementById('pixCode');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Seleciona o texto
+            const range = document.createRange();
+            range.selectNode(pixCode);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            
+            try {
+                // Copia para a área de transferência
+                document.execCommand('copy');
+                
+                // Mostra mensagem de sucesso
+                successMessage.style.display = 'block';
+                
+                // Esconde a mensagem após 3 segundos
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000);
+                
+            } catch (err) {
+                console.error('Erro ao copiar: ', err);
+                alert('Erro ao copiar o código. Tente selecionar e copiar manualmente.');
+            }
+            
+            // Remove a seleção
+            window.getSelection().removeAllRanges();
+        }
+
+        // Função alternativa para dispositivos móveis
+        if (navigator.clipboard) {
+            function copyPixCode() {
+                const pixCode = document.getElementById('pixCode').textContent;
+                const successMessage = document.getElementById('successMessage');
+                
+                navigator.clipboard.writeText(pixCode).then(() => {
+                    successMessage.style.display = 'block';
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 3000);
+                }).catch(err => {
+                    console.error('Erro ao copiar: ', err);
+                    alert('Erro ao copiar o código. Tente selecionar e copiar manualmente.');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+
